@@ -63,7 +63,8 @@ public class TempPathParameterResolver implements ParameterResolver, AfterAllCal
 
 		if (tempPathObject == null) {
 			try {
-				Path tempPath = Files.createTempDirectory(extensionContext.getTestClass().get().getSimpleName());
+				Path tempPath = Files
+						.createTempDirectory(extensionContext.getTestClass().orElse(getClass()).getSimpleName());
 
 				LOG.info("Created temporary path ''{0}'' for test execution", tempPath);
 
