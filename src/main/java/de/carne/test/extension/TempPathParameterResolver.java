@@ -50,8 +50,7 @@ public class TempPathParameterResolver implements ParameterResolver, AfterAllCal
 	}
 
 	@Override
-	public @Nullable Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
-			throws ParameterResolutionException {
+	public @Nullable Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) {
 		Optional<@Nullable ExtensionContext> optionalParentExtensionContext = extensionContext.getParent();
 
 		if (!optionalParentExtensionContext.isPresent()) {
