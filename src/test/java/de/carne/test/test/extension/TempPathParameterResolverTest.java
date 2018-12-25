@@ -22,7 +22,9 @@ import java.nio.file.LinkOption;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.MethodOrderer.Alphanumeric;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import de.carne.nio.file.FileUtil;
@@ -33,25 +35,25 @@ import de.carne.test.extension.TempPathParameterResolver;
  * Test {@linkplain TempPathParameterResolver} class.
  */
 @ExtendWith(TempPathParameterResolver.class)
-// TODO: Set fixed test order with JUnit 5.4.0
+@TestMethodOrder(Alphanumeric.class)
 class TempPathParameterResolverTest {
 
 	private static final String TEST_FILE1 = "file1.tmp";
 
 	@Test
-	void test1stAccess(TempPath tempPath) {
-		Path testFile1 = tempPath.get().resolve(TEST_FILE1);
-
-		Assertions.assertTrue(Files.exists(testFile1, LinkOption.NOFOLLOW_LINKS));
-	}
-
-	@Test
-	void test2ndtAccess(TempPath tempPath) throws IOException {
+	void test1stAccess(TempPath tempPath) throws IOException {
 		Path testFile1 = tempPath.get().resolve(TEST_FILE1);
 
 		Assertions.assertFalse(Files.exists(testFile1, LinkOption.NOFOLLOW_LINKS));
 
 		FileUtil.touch(testFile1);
+
+		Assertions.assertTrue(Files.exists(testFile1, LinkOption.NOFOLLOW_LINKS));
+	}
+
+	@Test
+	void test2ndtAccess(TempPath tempPath) {
+		Path testFile1 = tempPath.get().resolve(TEST_FILE1);
 
 		Assertions.assertTrue(Files.exists(testFile1, LinkOption.NOFOLLOW_LINKS));
 	}
