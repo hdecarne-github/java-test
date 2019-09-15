@@ -46,6 +46,20 @@ class TempPathExtensionTest {
 	@TempDir
 	static Path sharedTempDir;
 
+	@SuppressWarnings("null")
+	@TempDir
+	Path tempDirField1;
+	@SuppressWarnings("null")
+	@TempDir
+	File tempDirField2;
+
+	@SuppressWarnings("null")
+	@TempFile
+	Path tempFileField1;
+	@SuppressWarnings("null")
+	@TempFile
+	File tempFileField2;
+
 	@Test
 	void testSharedTempDir1stAccess() throws IOException {
 		Path testFile1 = TempPathExtensionTest.sharedTempDir.resolve(TEST_FILE1);
@@ -67,21 +81,25 @@ class TempPathExtensionTest {
 	@Test
 	void testTempDir(@TempDir Path tempDir) {
 		Assertions.assertTrue(Files.isDirectory(tempDir, LinkOption.NOFOLLOW_LINKS));
+		Assertions.assertTrue(Files.isDirectory(this.tempDirField1, LinkOption.NOFOLLOW_LINKS));
 	}
 
 	@Test
 	void testTempDir(@TempDir File tempDir) {
 		Assertions.assertTrue(tempDir.isDirectory());
+		Assertions.assertTrue(this.tempDirField2.isDirectory());
 	}
 
 	@Test
 	void testTempFile(@TempFile Path tempFile) {
 		Assertions.assertTrue(Files.isRegularFile(tempFile, LinkOption.NOFOLLOW_LINKS));
+		Assertions.assertTrue(Files.isRegularFile(this.tempFileField1, LinkOption.NOFOLLOW_LINKS));
 	}
 
 	@Test
 	void testTempFile(@TempFile File tempFile) {
 		Assertions.assertTrue(tempFile.isFile());
+		Assertions.assertTrue(this.tempFileField2.isFile());
 	}
 
 }

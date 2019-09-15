@@ -76,6 +76,7 @@ public class TempPathExtension implements BeforeAllCallback, BeforeEachCallback,
 				.forEach(field -> injectField(context, testInstance, field));
 	}
 
+	@SuppressWarnings("squid:S3011")
 	private void injectField(ExtensionContext context, @Nullable Object testInstance, @Nullable Field field) {
 		LOG.debug("Injecting field: {0}", field);
 
