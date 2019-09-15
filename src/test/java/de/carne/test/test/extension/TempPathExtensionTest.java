@@ -16,6 +16,7 @@
  */
 package de.carne.test.test.extension;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
@@ -28,21 +29,26 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import de.carne.nio.file.FileUtil;
-import de.carne.test.extension.TempPath;
-import de.carne.test.extension.TempPathParameterResolver;
+import de.carne.test.api.io.TempDir;
+import de.carne.test.api.io.TempFile;
+import de.carne.test.extension.TempPathExtension;
 
 /**
- * Test {@linkplain TempPathParameterResolver} class.
+ * Test {@linkplain TempPathExtension} class.
  */
-@ExtendWith(TempPathParameterResolver.class)
+@ExtendWith(TempPathExtension.class)
 @TestMethodOrder(Alphanumeric.class)
-class TempPathParameterResolverTest {
+class TempPathExtensionTest {
 
 	private static final String TEST_FILE1 = "file1.tmp";
 
+	@SuppressWarnings("null")
+	@TempDir
+	static Path sharedTempDir;
+
 	@Test
-	void test1stAccess(TempPath tempPath) throws IOException {
-		Path testFile1 = tempPath.get().resolve(TEST_FILE1);
+	void testSharedTempDir1stAccess() throws IOException {
+		Path testFile1 = TempPathExtensionTest.sharedTempDir.resolve(TEST_FILE1);
 
 		Assertions.assertFalse(Files.exists(testFile1, LinkOption.NOFOLLOW_LINKS));
 
@@ -52,10 +58,30 @@ class TempPathParameterResolverTest {
 	}
 
 	@Test
-	void test2ndtAccess(TempPath tempPath) {
-		Path testFile1 = tempPath.get().resolve(TEST_FILE1);
+	void testSharedTempDir2ndtAccess() {
+		Path testFile1 = TempPathExtensionTest.sharedTempDir.resolve(TEST_FILE1);
 
 		Assertions.assertTrue(Files.exists(testFile1, LinkOption.NOFOLLOW_LINKS));
+	}
+
+	@Test
+	void testTempDir(@TempDir Path tempDir) {
+		Assertions.assertTrue(Files.isDirectory(tempDir, LinkOption.NOFOLLOW_LINKS));
+	}
+
+	@Test
+	void testTempDir(@TempDir File tempDir) {
+		Assertions.assertTrue(tempDir.isDirectory());
+	}
+
+	@Test
+	void testTempFile(@TempFile Path tempFile) {
+		Assertions.assertTrue(Files.isRegularFile(tempFile, LinkOption.NOFOLLOW_LINKS));
+	}
+
+	@Test
+	void testTempFile(@TempFile File tempFile) {
+		Assertions.assertTrue(tempFile.isFile());
 	}
 
 }

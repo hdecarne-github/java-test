@@ -14,26 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.carne.test.extension;
+package de.carne.test.api.io;
 
-import java.nio.file.Path;
-import java.util.function.Supplier;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
 /**
- * Parameter class providing access to a temporary directory created automatically on first access and deleted after the
- * test has been finished.
+ * Annotation for injecting a temporary file into class fields or method parameters.
+ * <p>
+ * The temporary file is automatically created during test execution and deleted after test completion.
+ * </p>
  */
-public final class TempPath implements Supplier<Path> {
-
-	private final Path path;
-
-	TempPath(Path path) {
-		this.path = path;
-	}
-
-	@Override
-	public Path get() {
-		return this.path;
-	}
-
+@Documented
+@Retention(RUNTIME)
+@Target({ FIELD, PARAMETER })
+public @interface TempFile {
+	// Annotation
 }
