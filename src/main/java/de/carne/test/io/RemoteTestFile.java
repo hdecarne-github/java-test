@@ -64,6 +64,7 @@ public final class RemoteTestFile extends TestFile {
 		this.localFileName = localFileName;
 	}
 
+	@SuppressWarnings("squid:S3725")
 	@Override
 	public Path getFilePath(Path dir) throws IOException {
 		URL remoteFile = new URL(this.remoteUrl);

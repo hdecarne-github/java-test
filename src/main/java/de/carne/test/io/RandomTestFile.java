@@ -36,6 +36,7 @@ public class RandomTestFile extends TestFile {
 	private static final int MIN_RANDOM_FILE_SIZE = 1;
 	private static final int MAX_RANDOM_FILE_SIZE = 8192;
 
+	@SuppressWarnings("squid:S2245")
 	private final Random random = new Random();
 	private final String fileName;
 	private final int fileSize;
@@ -67,6 +68,7 @@ public class RandomTestFile extends TestFile {
 				: MIN_RANDOM_FILE_SIZE + this.random.nextInt(MAX_RANDOM_FILE_SIZE - MIN_RANDOM_FILE_SIZE + 1));
 	}
 
+	@SuppressWarnings("squid:S3725")
 	@Override
 	protected Path getFilePath(Path fileDir) throws IOException {
 		Path file = fileDir.resolve(this.fileName);
