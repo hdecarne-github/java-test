@@ -42,6 +42,8 @@ class TempPathExtensionTest {
 
 	private static final String TEST_FILE1 = "file1.tmp";
 
+	private static final byte[] TEST_CONTENT = { (byte) 0x00, (byte) 0xff };
+
 	@SuppressWarnings("null")
 	@TempDir
 	static Path sharedTempDir;
@@ -54,7 +56,7 @@ class TempPathExtensionTest {
 	File tempDirField2;
 
 	@SuppressWarnings("null")
-	@TempFile
+	@TempFile(content = { (byte) 0x00, (byte) 0xff })
 	Path tempFileField1;
 	@SuppressWarnings("null")
 	@TempFile
@@ -91,9 +93,11 @@ class TempPathExtensionTest {
 	}
 
 	@Test
-	void testTempFile(@TempFile Path tempFile) {
+	void testTempFile(@TempFile(content = { (byte) 0x00, (byte) 0xff }) Path tempFile) throws IOException {
 		Assertions.assertTrue(Files.isRegularFile(tempFile, LinkOption.NOFOLLOW_LINKS));
+		Assertions.assertArrayEquals(TEST_CONTENT, Files.readAllBytes(tempFile));
 		Assertions.assertTrue(Files.isRegularFile(this.tempFileField1, LinkOption.NOFOLLOW_LINKS));
+		Assertions.assertArrayEquals(TEST_CONTENT, Files.readAllBytes(this.tempFileField1));
 	}
 
 	@Test

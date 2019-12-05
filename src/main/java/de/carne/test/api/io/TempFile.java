@@ -34,5 +34,10 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME)
 @Target({ FIELD, PARAMETER })
 public @interface TempFile {
-	// Annotation
+	/**
+	 * Initial content of the temporary file.
+	 *
+	 * @return the initial content of the temporary file.
+	 */
+	byte[] content() default {};
 }

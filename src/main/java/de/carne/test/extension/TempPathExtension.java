@@ -23,6 +23,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
@@ -198,11 +199,10 @@ public class TempPathExtension implements BeforeAllCallback, BeforeEachCallback,
 				.getOrComputeIfAbsent(context.getRequiredTestClass().getSimpleName(),
 						TempPathExtension::createTempDirResource, TempDirResource.class)
 				.getPath();
-		Path tempFile = context.getStore(EXTENSION_NAMESPACE)
-				.getOrComputeIfAbsent(field,
-						key -> createTempFileResource(tempDir, context.getTestClass().get().getSimpleName()),
-						TempFileResource.class)
-				.getPath();
+		Path tempFile = context.getStore(EXTENSION_NAMESPACE).getOrComputeIfAbsent(field,
+				key -> createTempFileResource(tempDir, context.getTestClass().get().getSimpleName(),
+						Objects.requireNonNull(field.getAnnotation(TempFile.class)).content()),
+				TempFileResource.class).getPath();
 
 		LOG.debug("Set temporary file: {0} = {1}", field, tempDir);
 
@@ -216,7 +216,8 @@ public class TempPathExtension implements BeforeAllCallback, BeforeEachCallback,
 				.getPath();
 		Path tempFile = context.getStore(EXTENSION_NAMESPACE)
 				.getOrComputeIfAbsent(parameter,
-						key -> createTempFileResource(tempDir, context.getTestClass().get().getSimpleName()),
+						key -> createTempFileResource(tempDir, context.getTestClass().get().getSimpleName(),
+								Objects.requireNonNull(parameter.getAnnotation(TempFile.class)).content()),
 						TempFileResource.class)
 				.getPath();
 
@@ -225,11 +226,12 @@ public class TempPathExtension implements BeforeAllCallback, BeforeEachCallback,
 		return (parameter.getType().equals(Path.class) ? tempFile : tempFile.toFile());
 	}
 
-	private static TempFileResource createTempFileResource(Path tempDir, String prefix) {
+	private static TempFileResource createTempFileResource(Path tempDir, String prefix, byte[] content) {
 		Path tempFile;
 
 		try {
 			tempFile = Files.createTempFile(tempDir, prefix, "");
+			Files.write(tempFile, content, StandardOpenOption.APPEND);
 		} catch (IOException e) {
 			throw new ExtensionConfigurationException("Failed to create temporary file", e);
 		}
