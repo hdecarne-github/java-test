@@ -22,7 +22,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 /**
  * Extension that ensures a minimal logging during test execution.
  */
-public class BoogLogExtension implements BeforeAllCallback {
+public class BootLogExtension implements BeforeAllCallback {
 
 	@Override
 	public void beforeAll(ExtensionContext context) throws Exception {
