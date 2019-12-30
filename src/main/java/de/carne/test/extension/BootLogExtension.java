@@ -24,10 +24,15 @@ import org.junit.jupiter.api.extension.ExtensionContext;
  */
 public class BootLogExtension implements BeforeAllCallback {
 
+	private static final String PROPERTY_LOGGING_CONFIG = "java.util.logging.config.file";
+	private static final String CONFIG_BOOT = "logging-boot.properties";
+
 	@Override
 	public void beforeAll(ExtensionContext context) throws Exception {
 		// Make sure a minimal logging configuration is set (may be overridden later)
-		System.setProperty("java.util.logging.config.file", "logging-boot.properties");
+		if (System.getProperty(PROPERTY_LOGGING_CONFIG) == null) {
+			System.setProperty(PROPERTY_LOGGING_CONFIG, CONFIG_BOOT);
+		}
 	}
 
 }
