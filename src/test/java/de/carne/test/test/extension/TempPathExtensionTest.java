@@ -31,12 +31,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import de.carne.nio.file.FileUtil;
 import de.carne.test.api.io.TempDir;
 import de.carne.test.api.io.TempFile;
+import de.carne.test.extension.BoogLogExtension;
 import de.carne.test.extension.TempPathExtension;
 
 /**
  * Test {@linkplain TempPathExtension} class.
  */
-@ExtendWith(TempPathExtension.class)
+@ExtendWith({ BoogLogExtension.class, TempPathExtension.class })
 @TestMethodOrder(Alphanumeric.class)
 class TempPathExtensionTest {
 
