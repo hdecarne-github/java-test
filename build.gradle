@@ -42,11 +42,6 @@ dependencies {
 	runtimeOnly(group: "org.junit.jupiter", name: "junit-jupiter-engine", version: project.junit5Version)
 }
 
-tasks.withType(JavaCompile) {
-	// Do not generate debug infos
-	options.compilerArgs += ["-g:none"]
-}
-
 jar {
 	manifest {
 		attributes "Automatic-Module-Name": automaticModuleName
