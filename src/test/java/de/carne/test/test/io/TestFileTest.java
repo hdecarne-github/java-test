@@ -37,6 +37,7 @@ import de.carne.test.io.TestFile;
 class TestFileTest {
 
 	private static final String README_MD_URL = "https://raw.githubusercontent.com/hdecarne/java-test/master/README.md";
+	private static final String README_MD_CHECKSUM = "9f662d4ffadb8595e96b1552ee6a8f90ba08fbbb419c92fdf7b7ab558792412d";
 	private static final String README_MD_FILE_NAME = "README.md";
 	private static final int README_MD_SIZE = 649;
 	private static final String README_TXT_FILE_NAME = "README.txt";
@@ -52,7 +53,7 @@ class TestFileTest {
 
 	@Test
 	void testRemoteTestFile2(@TempDir Path dir) throws IOException {
-		TestFile testFile2 = new RemoteTestFile(dir, README_MD_URL, README_TXT_FILE_NAME);
+		TestFile testFile2 = new RemoteTestFile(dir, README_MD_URL, README_TXT_FILE_NAME, README_MD_CHECKSUM);
 
 		Assertions.assertEquals(README_MD_SIZE, Files.size(testFile2.getPath()));
 		Assertions.assertEquals(README_MD_SIZE, testFile2.getFile().length());
