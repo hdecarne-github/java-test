@@ -15,6 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 @NonNullByDefault
-package de.carne.test.api;
+package de.carne.test;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
