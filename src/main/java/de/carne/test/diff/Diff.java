@@ -91,7 +91,7 @@ public final class Diff {
 		DiffResult<String> result;
 
 		try (BufferedReader reader1 = newReader(file1, cs); BufferedReader reader2 = newReader(file2, cs)) {
-			result = runDiffer(reader1, reader2);
+			result = lines(reader1, reader2);
 		}
 		return result;
 	}
@@ -111,7 +111,7 @@ public final class Diff {
 		DiffResult<String> result;
 
 		try (BufferedReader reader1 = newReader(string1); BufferedReader reader2 = newReader(string2)) {
-			result = runDiffer(reader1, reader2);
+			result = lines(reader1, reader2);
 		} catch (IOException e) {
 			throw Exceptions.toRuntime(e);
 		}
@@ -122,7 +122,15 @@ public final class Diff {
 		return new BufferedReader(new StringReader(string));
 	}
 
-	private static DiffResult<String> runDiffer(BufferedReader reader1, BufferedReader reader2) throws IOException {
+	/**
+	 * Diffs two {@linkplain BufferedReader} inputs line by line
+	 *
+	 * @param reader1 the 1st input lines to diff.
+	 * @param reader2 the 2nd input lines to diff.
+	 * @return the diff result.
+	 * @throws IOException if an I/O error occurs.
+	 */
+	public static DiffResult<String> lines(BufferedReader reader1, BufferedReader reader2) throws IOException {
 		Differ<String> differ = Differ.lineDiffer(TEXT_DIFFER_RANGE);
 		String reader1Line = reader1.readLine();
 		String reader2Line = reader2.readLine();
