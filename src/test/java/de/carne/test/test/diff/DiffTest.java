@@ -16,6 +16,7 @@
  */
 package de.carne.test.test.diff;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Objects;
@@ -24,6 +25,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import de.carne.boot.logging.Log;
 import de.carne.test.api.io.TempDir;
 import de.carne.test.diff.Diff;
 import de.carne.test.diff.DiffResult;
@@ -37,6 +39,8 @@ import de.carne.test.io.TestFile;
 @ExtendWith(TempPathExtension.class)
 class DiffTest {
 
+	private static final Log LOG = new Log();
+
 	private static final String CHARACTERS_1A = "abcdefghijklmnopqrstuvwxyz";
 	private static final String CHARACTERS_1B = "zbcdefghHijklmnopqrstuvwxya ABCD";
 
@@ -49,23 +53,34 @@ class DiffTest {
 
 	@Test
 	void testCharacterDiff() {
-		DiffResult<Character> matchResult = Diff.characters(CHARACTERS_1A, CHARACTERS_1A);
+		DiffResult<Character> matchResult = diffCharacters(CHARACTERS_1A, CHARACTERS_1A);
 
 		Assertions.assertEquals(DiffResult.characterMatch(), matchResult);
 
-		DiffResult<Character> diffResult = Diff.characters(CHARACTERS_1A, CHARACTERS_1B);
+		DiffResult<Character> diffResult = diffCharacters(CHARACTERS_1A, CHARACTERS_1B);
 
 		Assertions.assertEquals(10, diffResult.size());
-		Assertions.assertEquals("0:+z", diffResult.entryAt(0).toString());
-		Assertions.assertEquals("0:-a", diffResult.entryAt(1).toString());
-		Assertions.assertEquals("8:+H", diffResult.entryAt(2).toString());
-		Assertions.assertEquals("25:+a", diffResult.entryAt(3).toString());
-		Assertions.assertEquals("25:+ ", diffResult.entryAt(4).toString());
-		Assertions.assertEquals("25:+A", diffResult.entryAt(5).toString());
-		Assertions.assertEquals("25:+B", diffResult.entryAt(6).toString());
-		Assertions.assertEquals("25:+C", diffResult.entryAt(7).toString());
-		Assertions.assertEquals("25:+D", diffResult.entryAt(8).toString());
-		Assertions.assertEquals("25:-z", diffResult.entryAt(9).toString());
+
+		Assertions.assertEquals("@0:+z", diffResult.entryAt(0).toString());
+		Assertions.assertEquals("@0:-a", diffResult.entryAt(1).toString());
+		Assertions.assertEquals("@8:+H", diffResult.entryAt(2).toString());
+		Assertions.assertEquals("@25:+a", diffResult.entryAt(3).toString());
+		Assertions.assertEquals("@25:+ ", diffResult.entryAt(4).toString());
+		Assertions.assertEquals("@25:+A", diffResult.entryAt(5).toString());
+		Assertions.assertEquals("@25:+B", diffResult.entryAt(6).toString());
+		Assertions.assertEquals("@25:+C", diffResult.entryAt(7).toString());
+		Assertions.assertEquals("@25:+D", diffResult.entryAt(8).toString());
+		Assertions.assertEquals("@25:-z", diffResult.entryAt(9).toString());
+	}
+
+	private DiffResult<Character> diffCharacters(String string1, String string2) {
+		LOG.info("Comparing \"{0}\" to \"{1}\"", string1, string2);
+
+		DiffResult<Character> result = Diff.characters(string1, string2);
+
+		LOG.info("Result:\n{0}", result);
+
+		return result;
 	}
 
 	@Test
@@ -74,28 +89,38 @@ class DiffTest {
 		TestFile file1b = new RemoteTestFile(tmpDir, FILE_1B);
 		TestFile file1c = new RemoteTestFile(tmpDir, FILE_1C);
 
-		DiffResult<String> matchResult = Diff.lines(file1a.getFile(), file1a.getFile());
+		DiffResult<String> matchResult = diffLines(file1a.getFile(), file1a.getFile());
 
 		Assertions.assertEquals(DiffResult.lineMatch(), matchResult);
 
-		DiffResult<String> diffResult = Diff.lines(file1a.getFile(), file1b.getFile());
+		DiffResult<String> diffResult = diffLines(file1a.getFile(), file1b.getFile());
 
 		Assertions.assertEquals(10, diffResult.size());
-		Assertions.assertEquals("0:+1?", diffResult.entryAt(0).toString());
-		Assertions.assertEquals("0:-1", diffResult.entryAt(1).toString());
-		Assertions.assertEquals("98:+99?", diffResult.entryAt(2).toString());
-		Assertions.assertEquals("98:+100?", diffResult.entryAt(3).toString());
-		Assertions.assertEquals("98:+101?", diffResult.entryAt(4).toString());
-		Assertions.assertEquals("98:+102?", diffResult.entryAt(5).toString());
-		Assertions.assertEquals("98:-99", diffResult.entryAt(6).toString());
-		Assertions.assertEquals("99:-100", diffResult.entryAt(7).toString());
-		Assertions.assertEquals("100:-101", diffResult.entryAt(8).toString());
-		Assertions.assertEquals("101:-102", diffResult.entryAt(9).toString());
+		Assertions.assertEquals("@0:+1?", diffResult.entryAt(0).toString());
+		Assertions.assertEquals("@0:-1", diffResult.entryAt(1).toString());
+		Assertions.assertEquals("@98:+100?", diffResult.entryAt(3).toString());
+		Assertions.assertEquals("@98:+99?", diffResult.entryAt(2).toString());
+		Assertions.assertEquals("@98:+101?", diffResult.entryAt(4).toString());
+		Assertions.assertEquals("@98:+102?", diffResult.entryAt(5).toString());
+		Assertions.assertEquals("@98:-99", diffResult.entryAt(6).toString());
+		Assertions.assertEquals("@99:-100", diffResult.entryAt(7).toString());
+		Assertions.assertEquals("@100:-101", diffResult.entryAt(8).toString());
+		Assertions.assertEquals("@101:-102", diffResult.entryAt(9).toString());
 
-		DiffResult<String> excessiveDiffResult = Diff.lines(file1a.getFile(), file1c.getFile());
+		DiffResult<String> excessiveDiffResult = diffLines(file1a.getFile(), file1c.getFile());
 
 		Assertions.assertFalse(excessiveDiffResult.isRestrained());
 		Assertions.assertEquals(200, excessiveDiffResult.size());
+	}
+
+	private DiffResult<String> diffLines(File file1, File file2) throws IOException {
+		LOG.info("Comparing file \"{0}\" to \"{1}\"", file1, file2);
+
+		DiffResult<String> result = Diff.lines(file1, file2);
+
+		LOG.info("Result:\n{0}", result);
+
+		return result;
 	}
 
 }

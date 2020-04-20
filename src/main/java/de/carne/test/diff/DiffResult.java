@@ -82,7 +82,7 @@ public final class DiffResult<T> implements Iterable<DiffEntry<T>> {
 
 	/**
 	 * Gets the number entries in this result instance.
-	 * 
+	 *
 	 * @return the number entries in this result instance.
 	 */
 	public int size() {
@@ -91,7 +91,7 @@ public final class DiffResult<T> implements Iterable<DiffEntry<T>> {
 
 	/**
 	 * Gets the entry at the given position in this result instance.
-	 * 
+	 *
 	 * @param index the position of the entry to get.
 	 * @return the entry at the given position in this result instance.
 	 */
@@ -114,19 +114,18 @@ public final class DiffResult<T> implements Iterable<DiffEntry<T>> {
 		StringWriter buffer = new StringWriter();
 		PrintWriter writer = new PrintWriter(buffer);
 		Deque<DiffEntry<T>> previousEntries = new LinkedList<>();
-		int positionOffset = 1;
 
 		for (DiffEntry<T> entry : this) {
 			DiffEntry<T> previousEntry = previousEntries.peekLast();
 
 			if (previousEntry != null && (entry.position() - previousEntry.position()) > 1) {
-				positionOffset = toStringHelper(writer, previousEntries, positionOffset);
+				toStringHelper(writer, previousEntries);
 				previousEntries.clear();
 			}
 			previousEntries.add(entry);
 		}
 		if (!previousEntries.isEmpty()) {
-			toStringHelper(writer, previousEntries, positionOffset);
+			toStringHelper(writer, previousEntries);
 		}
 		if (!this.restrained) {
 			writer.println("...");
@@ -136,12 +135,11 @@ public final class DiffResult<T> implements Iterable<DiffEntry<T>> {
 	}
 
 	@SuppressWarnings("null")
-	private int toStringHelper(PrintWriter writer, Deque<DiffEntry<T>> previousEntries, int positionOffset) {
-		int nextPositionOffset = positionOffset;
+	private void toStringHelper(PrintWriter writer, Deque<DiffEntry<T>> previousEntries) {
 		int deleteCount = 0;
 		int insertCount = 0;
 
-		writer.println(nextPositionOffset + previousEntries.peekFirst().position());
+		writer.println("@" + previousEntries.peekFirst().position());
 		for (DiffEntry<T> previousEntry : previousEntries) {
 			if (previousEntry.type() == DiffEntry.Type.DELETE) {
 				writer.println("< " + Strings.encode(previousEntry.value().toString()));
@@ -157,7 +155,6 @@ public final class DiffResult<T> implements Iterable<DiffEntry<T>> {
 				insertCount++;
 			}
 		}
-		return nextPositionOffset;
 	}
 
 }

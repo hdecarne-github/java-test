@@ -85,7 +85,7 @@ public final class DiffEntry<T> {
 	public String toString() {
 		StringBuilder buffer = new StringBuilder();
 
-		buffer.append(this.position).append(this.type == Type.DELETE ? ":-" : ":+");
+		buffer.append('@').append(this.position).append(this.type == Type.DELETE ? ":-" : ":+");
 		Strings.encode(buffer, this.value.toString());
 		return buffer.toString();
 	}
