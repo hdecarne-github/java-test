@@ -115,9 +115,15 @@ class Differ<T> {
 	}
 
 	public void run(boolean finish) {
-		run(0, this.leftLength, 0, this.rightLength);
-
-		if (!finish) {
+		if (this.restrained) {
+			run(0, this.leftLength, 0, this.rightLength);
+		}
+		if (finish || this.maxMatchPosition < 0) {
+			this.position += this.leftLength;
+			this.leftLength = 0;
+			this.rightLength = 0;
+			this.restrained = this.maxMatchPosition >= 0;
+		} else {
 			DiffEntry<T> lastEntry;
 			int leftRemaining = 0;
 			int rightRemaining = 0;
@@ -136,10 +142,6 @@ class Differ<T> {
 			this.leftLength = leftRemaining;
 			this.rightLength = leftRemaining;
 			this.restrained = this.leftLength < this.range && this.rightLength < this.range;
-		} else {
-			this.position += this.leftLength;
-			this.leftLength = 0;
-			this.rightLength = 0;
 		}
 	}
 

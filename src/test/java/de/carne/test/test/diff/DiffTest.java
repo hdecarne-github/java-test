@@ -50,27 +50,41 @@ class DiffTest {
 			.toExternalForm();
 	private static final String FILE_1C = Objects.requireNonNull(DiffTest.class.getResource("DiffTest1c.txt"))
 			.toExternalForm();
+	private static final String FILE_1D = Objects.requireNonNull(DiffTest.class.getResource("DiffTest1d.txt"))
+			.toExternalForm();
 
 	@Test
 	void testCharacterDiff() {
-		DiffResult<Character> matchResult = diffCharacters(CHARACTERS_1A, CHARACTERS_1A);
+		DiffResult<Character> diffResult1 = diffCharacters("", "");
 
-		Assertions.assertEquals(DiffResult.characterMatch(), matchResult);
+		Assertions.assertEquals(DiffResult.characterMatch(), diffResult1);
 
-		DiffResult<Character> diffResult = diffCharacters(CHARACTERS_1A, CHARACTERS_1B);
+		DiffResult<Character> diffResult2 = diffCharacters(CHARACTERS_1A, "");
 
-		Assertions.assertEquals(10, diffResult.size());
+		Assertions.assertEquals(CHARACTERS_1A.length(), diffResult2.size());
 
-		Assertions.assertEquals("@0:+z", diffResult.entryAt(0).toString());
-		Assertions.assertEquals("@0:-a", diffResult.entryAt(1).toString());
-		Assertions.assertEquals("@8:+H", diffResult.entryAt(2).toString());
-		Assertions.assertEquals("@25:+a", diffResult.entryAt(3).toString());
-		Assertions.assertEquals("@25:+ ", diffResult.entryAt(4).toString());
-		Assertions.assertEquals("@25:+A", diffResult.entryAt(5).toString());
-		Assertions.assertEquals("@25:+B", diffResult.entryAt(6).toString());
-		Assertions.assertEquals("@25:+C", diffResult.entryAt(7).toString());
-		Assertions.assertEquals("@25:+D", diffResult.entryAt(8).toString());
-		Assertions.assertEquals("@25:-z", diffResult.entryAt(9).toString());
+		DiffResult<Character> diffResult3 = diffCharacters("", CHARACTERS_1A);
+
+		Assertions.assertEquals(CHARACTERS_1A.length(), diffResult3.size());
+
+		DiffResult<Character> diffResult4 = diffCharacters(CHARACTERS_1A, CHARACTERS_1A);
+
+		Assertions.assertEquals(DiffResult.characterMatch(), diffResult4);
+
+		DiffResult<Character> diffResult5 = diffCharacters(CHARACTERS_1A, CHARACTERS_1B);
+
+		Assertions.assertEquals(10, diffResult5.size());
+
+		Assertions.assertEquals("@0:+z", diffResult5.entryAt(0).toString());
+		Assertions.assertEquals("@0:-a", diffResult5.entryAt(1).toString());
+		Assertions.assertEquals("@8:+H", diffResult5.entryAt(2).toString());
+		Assertions.assertEquals("@25:+a", diffResult5.entryAt(3).toString());
+		Assertions.assertEquals("@25:+ ", diffResult5.entryAt(4).toString());
+		Assertions.assertEquals("@25:+A", diffResult5.entryAt(5).toString());
+		Assertions.assertEquals("@25:+B", diffResult5.entryAt(6).toString());
+		Assertions.assertEquals("@25:+C", diffResult5.entryAt(7).toString());
+		Assertions.assertEquals("@25:+D", diffResult5.entryAt(8).toString());
+		Assertions.assertEquals("@25:-z", diffResult5.entryAt(9).toString());
 	}
 
 	private DiffResult<Character> diffCharacters(String string1, String string2) {
@@ -88,29 +102,42 @@ class DiffTest {
 		TestFile file1a = new RemoteTestFile(tmpDir, FILE_1A);
 		TestFile file1b = new RemoteTestFile(tmpDir, FILE_1B);
 		TestFile file1c = new RemoteTestFile(tmpDir, FILE_1C);
+		TestFile file1d = new RemoteTestFile(tmpDir, FILE_1D);
 
-		DiffResult<String> matchResult = diffLines(file1a.getFile(), file1a.getFile());
+		DiffResult<String> diffResult1 = diffLines(file1a.getFile(), file1a.getFile());
 
-		Assertions.assertEquals(DiffResult.lineMatch(), matchResult);
+		Assertions.assertEquals(DiffResult.lineMatch(), diffResult1);
 
-		DiffResult<String> diffResult = diffLines(file1a.getFile(), file1b.getFile());
+		DiffResult<String> diffResult2 = diffLines(file1a.getFile(), file1b.getFile());
 
-		Assertions.assertEquals(10, diffResult.size());
-		Assertions.assertEquals("@0:+1?", diffResult.entryAt(0).toString());
-		Assertions.assertEquals("@0:-1", diffResult.entryAt(1).toString());
-		Assertions.assertEquals("@98:+100?", diffResult.entryAt(3).toString());
-		Assertions.assertEquals("@98:+99?", diffResult.entryAt(2).toString());
-		Assertions.assertEquals("@98:+101?", diffResult.entryAt(4).toString());
-		Assertions.assertEquals("@98:+102?", diffResult.entryAt(5).toString());
-		Assertions.assertEquals("@98:-99", diffResult.entryAt(6).toString());
-		Assertions.assertEquals("@99:-100", diffResult.entryAt(7).toString());
-		Assertions.assertEquals("@100:-101", diffResult.entryAt(8).toString());
-		Assertions.assertEquals("@101:-102", diffResult.entryAt(9).toString());
+		Assertions.assertEquals(100, diffResult2.size());
 
-		DiffResult<String> excessiveDiffResult = diffLines(file1a.getFile(), file1c.getFile());
+		DiffResult<String> diffResult3 = diffLines(file1b.getFile(), file1a.getFile());
 
-		Assertions.assertFalse(excessiveDiffResult.isRestrained());
-		Assertions.assertEquals(200, excessiveDiffResult.size());
+		Assertions.assertEquals(100, diffResult3.size());
+
+		DiffResult<String> diffResult4 = diffLines(file1b.getFile(), file1b.getFile());
+
+		Assertions.assertEquals(DiffResult.lineMatch(), diffResult4);
+
+		DiffResult<String> diffResult5 = diffLines(file1b.getFile(), file1c.getFile());
+
+		Assertions.assertEquals(10, diffResult5.size());
+		Assertions.assertEquals("@0:+1?", diffResult5.entryAt(0).toString());
+		Assertions.assertEquals("@0:-1", diffResult5.entryAt(1).toString());
+		Assertions.assertEquals("@98:+100?", diffResult5.entryAt(3).toString());
+		Assertions.assertEquals("@98:+99?", diffResult5.entryAt(2).toString());
+		Assertions.assertEquals("@98:+101?", diffResult5.entryAt(4).toString());
+		Assertions.assertEquals("@98:+102?", diffResult5.entryAt(5).toString());
+		Assertions.assertEquals("@98:-99", diffResult5.entryAt(6).toString());
+		Assertions.assertEquals("@99:-100", diffResult5.entryAt(7).toString());
+		Assertions.assertEquals("@100:-101", diffResult5.entryAt(8).toString());
+		Assertions.assertEquals("@101:-102", diffResult5.entryAt(9).toString());
+
+		DiffResult<String> diffResult6 = diffLines(file1b.getFile(), file1d.getFile());
+
+		Assertions.assertFalse(diffResult6.isRestrained());
+		Assertions.assertEquals(200, diffResult6.size());
 	}
 
 	private DiffResult<String> diffLines(File file1, File file2) throws IOException {
