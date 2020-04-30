@@ -44,10 +44,10 @@ import org.junit.platform.commons.util.AnnotationUtils;
 import org.junit.platform.commons.util.ExceptionUtils;
 import org.junit.platform.commons.util.ReflectionUtils;
 
-import de.carne.boot.logging.Log;
 import de.carne.nio.file.FileUtil;
 import de.carne.test.api.io.TempDir;
 import de.carne.test.api.io.TempFile;
+import de.carne.util.logging.Log;
 
 /**
  * Extension that provides access to temporary directory and files during test execution.

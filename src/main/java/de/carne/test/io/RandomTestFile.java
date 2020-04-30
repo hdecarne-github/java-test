@@ -23,8 +23,8 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Random;
 
-import de.carne.boot.logging.Log;
 import de.carne.nio.file.attribute.FileAttributes;
+import de.carne.util.logging.Log;
 
 /**
  * Test file of random data and optionally random size.

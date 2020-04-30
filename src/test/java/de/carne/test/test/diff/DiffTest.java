@@ -25,13 +25,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import de.carne.boot.logging.Log;
 import de.carne.test.api.io.TempDir;
 import de.carne.test.diff.Diff;
 import de.carne.test.diff.DiffResult;
 import de.carne.test.extension.TempPathExtension;
 import de.carne.test.io.RemoteTestFile;
 import de.carne.test.io.TestFile;
+import de.carne.util.logging.Log;
 
 /**
  * Test {@linkplain Diff} class.

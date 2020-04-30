@@ -21,8 +21,8 @@ import java.util.Objects;
 
 import org.eclipse.jdt.annotation.Nullable;
 
-import de.carne.boot.check.Check;
 import de.carne.test.diff.DiffEntry.Type;
+import de.carne.util.Check;
 
 class Differ<T> {
 

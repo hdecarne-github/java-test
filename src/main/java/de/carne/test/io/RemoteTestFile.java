@@ -29,7 +29,6 @@ import java.text.MessageFormat;
 
 import org.eclipse.jdt.annotation.Nullable;
 
-import de.carne.boot.logging.Log;
 import de.carne.io.Checksum;
 import de.carne.io.ChecksumInputStream;
 import de.carne.io.IOUtil;
@@ -37,6 +36,7 @@ import de.carne.io.NullOutputStream;
 import de.carne.io.SHA256Checksum;
 import de.carne.nio.file.attribute.FileAttributes;
 import de.carne.text.HexBytes;
+import de.carne.util.logging.Log;
 
 /**
  * Test file downloaded via a URL.
