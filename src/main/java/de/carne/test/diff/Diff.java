@@ -25,7 +25,7 @@ import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-import de.carne.boot.Exceptions;
+import de.carne.util.Exceptions;
 
 /**
  * Utility class providing all kinds of diff operations.
