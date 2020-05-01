@@ -15,6 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 @NonNullByDefault
-package de.carne.test.diff;
+package de.carne.test.extension.io;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;

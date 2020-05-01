@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.carne.test.test.io;
+package de.carne.test.test.helper.io;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -25,10 +25,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import de.carne.test.api.io.TempDir;
-import de.carne.test.extension.TempPathExtension;
-import de.carne.test.io.RandomTestFile;
-import de.carne.test.io.RemoteTestFile;
-import de.carne.test.io.TestFile;
+import de.carne.test.extension.io.TempPathExtension;
+import de.carne.test.helper.io.RandomTestFile;
+import de.carne.test.helper.io.RemoteTestFile;
+import de.carne.test.helper.io.TestFile;
 
 /**
  * Test {@linkplain RemoteTestFile} class.

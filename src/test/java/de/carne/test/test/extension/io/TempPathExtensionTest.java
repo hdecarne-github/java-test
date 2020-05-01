@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.carne.test.test.extension;
+package de.carne.test.test.extension.io;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +31,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import de.carne.nio.file.FileUtil;
 import de.carne.test.api.io.TempDir;
 import de.carne.test.api.io.TempFile;
-import de.carne.test.extension.TempPathExtension;
+import de.carne.test.extension.io.TempPathExtension;
 
 /**
  * Test {@linkplain TempPathExtension} class.

@@ -14,12 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.carne.test.extension;
+package de.carne.test.extension.io;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -40,13 +41,13 @@ import org.junit.jupiter.api.extension.ExtensionContext.Store.CloseableResource;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
-import org.junit.platform.commons.util.AnnotationUtils;
-import org.junit.platform.commons.util.ExceptionUtils;
-import org.junit.platform.commons.util.ReflectionUtils;
+import org.junit.platform.commons.support.AnnotationSupport;
+import org.junit.platform.commons.support.HierarchyTraversalMode;
 
 import de.carne.nio.file.FileUtil;
 import de.carne.test.api.io.TempDir;
 import de.carne.test.api.io.TempFile;
+import de.carne.util.Exceptions;
 import de.carne.util.logging.Log;
 
 /**
@@ -62,19 +63,19 @@ public class TempPathExtension implements BeforeAllCallback, BeforeEachCallback,
 
 	@Override
 	public void beforeAll(ExtensionContext context) throws Exception {
-		injectFields(context, null, ReflectionUtils::isStatic);
+		injectFields(context, null, field -> Modifier.isStatic(field.getModifiers()));
 	}
 
 	@Override
 	public void beforeEach(ExtensionContext context) throws Exception {
-		injectFields(context, context.getRequiredTestInstance(), ReflectionUtils::isNotStatic);
+		injectFields(context, context.getRequiredTestInstance(), field -> !Modifier.isStatic(field.getModifiers()));
 	}
 
 	private void injectFields(ExtensionContext context, @Nullable Object testInstance, Predicate<Field> predicate) {
-		AnnotationUtils.findAnnotatedFields(context.getRequiredTestClass(), TempDir.class, predicate)
-				.forEach(field -> injectField(context, testInstance, field));
-		AnnotationUtils.findAnnotatedFields(context.getRequiredTestClass(), TempFile.class, predicate)
-				.forEach(field -> injectField(context, testInstance, field));
+		AnnotationSupport.findAnnotatedFields(context.getRequiredTestClass(), TempDir.class, predicate,
+				HierarchyTraversalMode.TOP_DOWN).forEach(field -> injectField(context, testInstance, field));
+		AnnotationSupport.findAnnotatedFields(context.getRequiredTestClass(), TempFile.class, predicate,
+				HierarchyTraversalMode.TOP_DOWN).forEach(field -> injectField(context, testInstance, field));
 	}
 
 	@SuppressWarnings("squid:S3011")
@@ -90,7 +91,7 @@ public class TempPathExtension implements BeforeAllCallback, BeforeEachCallback,
 				checkedField.set(testInstance, getTempFileField(context, checkedField));
 			}
 		} catch (IllegalAccessException e) {
-			ExceptionUtils.throwAsUncheckedException(e);
+			throw Exceptions.toRuntime(e);
 		}
 	}
 
@@ -125,10 +126,11 @@ public class TempPathExtension implements BeforeAllCallback, BeforeEachCallback,
 		if (!SUPPORTED_TYPES.contains(fieldType)) {
 			throw new ExtensionConfigurationException("Unsupported field type: " + fieldType);
 		}
-		if (ReflectionUtils.isPrivate(field)) {
+		if (Modifier.isPrivate(field.getModifiers())) {
 			throw new ExtensionConfigurationException("Cannot inject private field: " + field);
 		}
-		return ReflectionUtils.makeAccessible(field);
+		field.setAccessible(true);
+		return field;
 	}
 
 	private Parameter checkParameter(Parameter parameter) {

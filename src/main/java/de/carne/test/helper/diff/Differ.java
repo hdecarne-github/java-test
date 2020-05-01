@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.carne.test.diff;
+package de.carne.test.helper.diff;
 
 import java.util.LinkedList;
 import java.util.Objects;
 
 import org.eclipse.jdt.annotation.Nullable;
 
-import de.carne.test.diff.DiffEntry.Type;
+import de.carne.test.helper.diff.DiffEntry.Type;
 import de.carne.util.Check;
 
 class Differ<T> {

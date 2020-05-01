@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.carne.test.test.diff;
+package de.carne.test.test.helper.diff;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,11 +26,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import de.carne.test.api.io.TempDir;
-import de.carne.test.diff.Diff;
-import de.carne.test.diff.DiffResult;
-import de.carne.test.extension.TempPathExtension;
-import de.carne.test.io.RemoteTestFile;
-import de.carne.test.io.TestFile;
+import de.carne.test.extension.io.TempPathExtension;
+import de.carne.test.helper.diff.Diff;
+import de.carne.test.helper.diff.DiffResult;
+import de.carne.test.helper.io.RemoteTestFile;
+import de.carne.test.helper.io.TestFile;
 import de.carne.util.logging.Log;
 
 /**

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.carne.test.test.io;
+package de.carne.test.test.helper.io;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +22,7 @@ import java.io.IOException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import de.carne.test.io.TestUserDir;
+import de.carne.test.helper.io.TestUserDir;
 
 /**
  * Test {@linkplain TestUserDir} class.
