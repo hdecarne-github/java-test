@@ -14,26 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.carne.test.api.io;
+@NonNullByDefault
+package de.carne.test.annotation.io;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-
-/**
- * Annotation for injecting a temporary directory into class fields or method parameters.
- * <p>
- * The temporary directory is automatically created during test execution and deleted (including any created file) after
- * test completion.
- * </p>
- */
-@Documented
-@Retention(RUNTIME)
-@Target({ FIELD, PARAMETER })
-public @interface TempDir {
-	// Annotation
-}
+import org.eclipse.jdt.annotation.NonNullByDefault;

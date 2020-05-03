@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import de.carne.test.api.io.TempDir;
+import de.carne.test.annotation.io.TempDir;
 import de.carne.test.extension.io.TempPathExtension;
 import de.carne.test.helper.io.RandomTestFile;
 import de.carne.test.helper.io.RemoteTestFile;

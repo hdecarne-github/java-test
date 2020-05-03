@@ -45,8 +45,8 @@ import org.junit.platform.commons.support.AnnotationSupport;
 import org.junit.platform.commons.support.HierarchyTraversalMode;
 
 import de.carne.nio.file.FileUtil;
-import de.carne.test.api.io.TempDir;
-import de.carne.test.api.io.TempFile;
+import de.carne.test.annotation.io.TempDir;
+import de.carne.test.annotation.io.TempFile;
 import de.carne.util.Exceptions;
 import de.carne.util.logging.Log;
 

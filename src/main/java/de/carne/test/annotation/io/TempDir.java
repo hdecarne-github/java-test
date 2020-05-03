@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.carne.test.api.io;
+package de.carne.test.annotation.io;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.PARAMETER;
@@ -25,19 +25,15 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * Annotation for injecting a temporary file into class fields or method parameters.
+ * Annotation for injecting a temporary directory into class fields or method parameters.
  * <p>
- * The temporary file is automatically created during test execution and deleted after test completion.
+ * The temporary directory is automatically created during test execution and deleted (including any created file) after
+ * test completion.
  * </p>
  */
 @Documented
 @Retention(RUNTIME)
 @Target({ FIELD, PARAMETER })
-public @interface TempFile {
-	/**
-	 * Initial content of the temporary file.
-	 *
-	 * @return the initial content of the temporary file.
-	 */
-	byte[] content() default {};
+public @interface TempDir {
+	// Annotation
 }
