@@ -23,7 +23,7 @@ import java.nio.file.LinkOption;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.MethodOrderer.Alphanumeric;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,7 +37,7 @@ import de.carne.test.extension.io.TempPathExtension;
  * Test {@linkplain TempPathExtension} class.
  */
 @ExtendWith(TempPathExtension.class)
-@TestMethodOrder(Alphanumeric.class)
+@TestMethodOrder(MethodOrderer.MethodName.class)
 class TempPathExtensionTest {
 
 	private static final String TEST_FILE1 = "file1.tmp";
