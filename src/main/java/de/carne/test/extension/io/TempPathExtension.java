@@ -118,6 +118,7 @@ public class TempPathExtension implements BeforeAllCallback, BeforeEachCallback,
 				: getTempFileParameter(extensionContext, checkedParameter));
 	}
 
+	@SuppressWarnings("java:S3011")
 	private Field checkField(@Nullable Field field) {
 		Objects.requireNonNull(field);
 

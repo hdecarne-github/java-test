@@ -145,6 +145,7 @@ class Differ<T> {
 		}
 	}
 
+	@SuppressWarnings("java:S3776")
 	private void run(int leftStart, int leftEnd, int rightStart, int rightEnd) {
 		Snake snake = findSnake(leftStart, leftEnd, rightStart, rightEnd);
 
