@@ -9,6 +9,7 @@ plugins {
 	id "org.sonarqube" version "3.1"
 	id "org.owasp.dependencycheck" version "6.0.5"
 }
+
 // Build helpers
 def snapshotBuild = project.version.endsWith("-SNAPSHOT")
 def releaseBuild = !snapshotBuild
@@ -41,8 +42,8 @@ repositories {
 	mavenCentral()
 	if(snapshotBuild) {
 		maven { url mavenSnapshotRepository }
-		mavenLocal()
 	}
+	mavenLocal()
 }
 
 dependencies {
