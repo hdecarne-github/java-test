@@ -1,7 +1,7 @@
 ### Common test code shared between projects
-[![Download](https://api.bintray.com/packages/hdecarne/maven/java-test/images/download.svg)](https://bintray.com/hdecarne/maven/java-test/_latestVersion)
+[![Publication](https://img.shields.io/maven-central/v/de.carne/java-test)](https://search.maven.org/artifact/de.carne/java-test)
 [![Build Status](https://travis-ci.com/hdecarne/java-test.svg?branch=master)](https://travis-ci.com/hdecarne/java-test)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=de.carne.common%3Ajava-test&metric=coverage)](https://sonarcloud.io/dashboard/index/de.carne.common:java-test)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=de.carne%3Ajava-test&metric=coverage)](https://sonarcloud.io/dashboard/index/de.carne:java-test)
 
 #### License
 This project is subject to the the GNU General Public License version 3 or later version.
