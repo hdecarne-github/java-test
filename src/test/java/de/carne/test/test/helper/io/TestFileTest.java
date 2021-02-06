@@ -37,9 +37,9 @@ import de.carne.test.helper.io.TestFile;
 class TestFileTest {
 
 	private static final String README_MD_URL = "https://raw.githubusercontent.com/hdecarne/java-test/master/README.md";
-	private static final String README_MD_CHECKSUM = "a9aa388ce43ac566a843efe4e0429df95ba85db60e0086aa19a123f1e8e5cc3a";
+	private static final String README_MD_CHECKSUM = "43950685b727f2de0ac375aa1bef5dc146e46c5ca049edb5e2f7e39d3c0bf8eb";
 	private static final String README_MD_FILE_NAME = "README.md";
-	private static final int README_MD_SIZE = 641;
+	private static final int README_MD_SIZE = 603;
 	private static final String README_TXT_FILE_NAME = "README.txt";
 
 	@Test
