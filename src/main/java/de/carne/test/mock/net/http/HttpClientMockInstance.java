@@ -31,7 +31,7 @@ import de.carne.test.mock.ScopedMockInstance;
 /**
  * Mocks the {@linkplain HttpClient#newHttpClient()} method to return a spyable {@linkplain HttpClient} instance.
  */
-public class HttpClientMockInstance extends ScopedMockInstance<MockedStatic<HttpClient>, HttpClientMock> {
+public class HttpClientMockInstance extends ScopedMockInstance<MockedStatic<HttpClient>, HttpClient> {
 
 	/**
 	 * Constructs a new {@linkplain HttpClientMockInstance} instance.
@@ -40,7 +40,7 @@ public class HttpClientMockInstance extends ScopedMockInstance<MockedStatic<Http
 		super(HttpClientMockInstance::initialize, Mockito.spy(new HttpClientMock()));
 	}
 
-	private static MockedStatic<HttpClient> initialize(HttpClientMock instance) {
+	private static MockedStatic<HttpClient> initialize(HttpClient instance) {
 		MockedStatic<HttpClient> mock = Mockito.mockStatic(HttpClient.class);
 
 		mock.when(HttpClient::newHttpClient).thenReturn(instance);
