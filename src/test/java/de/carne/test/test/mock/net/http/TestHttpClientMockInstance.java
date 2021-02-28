@@ -16,10 +16,12 @@
  */
 package de.carne.test.test.mock.net.http;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandler;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.regex.Pattern;
 
@@ -40,6 +42,7 @@ class TestHttpClientMockInstance {
 	private static final URI TEST_URI1 = URI.create("https://domain.tld/test1");
 	private static final URI TEST_URI2 = URI.create("https://domain.tld/test2");
 	private static final URI TEST_URI3 = URI.create("https://domain.tld/test3");
+	private static final URI TEST_URI4 = URI.create("https://domain.tld/test4");
 
 	private static final HttpClientMockInstance MOCK_INSTANCE = new HttpClientMockInstance();
 
@@ -74,7 +77,7 @@ class TestHttpClientMockInstance {
 	}
 
 	@Test
-	void testUriMatch() throws Exception {
+	void testUriMatch() throws IOException, InterruptedException {
 		HttpClient httpClient = HttpClient.newHttpClient();
 		HttpRequest request1 = HttpRequest.newBuilder(TEST_URI1).build();
 		HttpResponse<String> response1 = httpClient.send(request1, BodyHandlers.ofString());
@@ -90,6 +93,35 @@ class TestHttpClientMockInstance {
 		HttpResponse<String> response3 = httpClient.send(request3, BodyHandlers.ofString());
 
 		Assertions.assertEquals(TEST_URI3.toASCIIString(), response3.body());
+	}
+
+	@Test
+	void testMockDefaults() {
+		HttpClient httpClient = HttpClient.newHttpClient();
+
+		Assertions.assertNotNull(httpClient.cookieHandler());
+		Assertions.assertNotNull(httpClient.connectTimeout());
+		Assertions.assertNotNull(httpClient.followRedirects());
+		Assertions.assertNotNull(httpClient.proxy());
+		Assertions.assertNotNull(httpClient.sslContext());
+		Assertions.assertNotNull(httpClient.sslParameters());
+		Assertions.assertNotNull(httpClient.authenticator());
+		Assertions.assertNotNull(httpClient.version());
+		Assertions.assertNotNull(httpClient.executor());
+	}
+
+	@Test
+	void testMockFailures() {
+		HttpClient httpClient = HttpClient.newHttpClient();
+		HttpRequest request = HttpRequest.newBuilder(TEST_URI4).build();
+		BodyHandler<String> bodyHandler = BodyHandlers.ofString();
+
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			httpClient.send(request, bodyHandler);
+		});
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			httpClient.sendAsync(request, bodyHandler);
+		});
 	}
 
 }
