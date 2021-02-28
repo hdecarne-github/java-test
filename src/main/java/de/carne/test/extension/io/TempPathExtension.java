@@ -45,6 +45,7 @@ import org.junit.platform.commons.support.AnnotationSupport;
 import org.junit.platform.commons.support.HierarchyTraversalMode;
 
 import de.carne.nio.file.FileUtil;
+import de.carne.nio.file.attribute.FileAttributes;
 import de.carne.test.annotation.io.TempDir;
 import de.carne.test.annotation.io.TempFile;
 import de.carne.util.Exceptions;
@@ -167,7 +168,7 @@ public class TempPathExtension implements BeforeAllCallback, BeforeEachCallback,
 		Path tempDir;
 
 		try {
-			tempDir = Files.createTempDirectory(prefix);
+			tempDir = Files.createTempDirectory(prefix, FileAttributes.userDirectoryDefault(FileUtil.tmpDir()));
 		} catch (IOException e) {
 			throw new ExtensionConfigurationException("Failed to create temporary directory", e);
 		}
