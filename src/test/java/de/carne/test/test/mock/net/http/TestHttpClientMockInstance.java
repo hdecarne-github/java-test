@@ -48,7 +48,7 @@ class TestHttpClientMockInstance {
 
 	@BeforeAll
 	@SuppressWarnings("java:S6073")
-	static void setupMock() throws Exception {
+	static void setupMock() throws IOException, InterruptedException {
 		HttpClient httpClient = MOCK_INSTANCE.get();
 
 		@SuppressWarnings("unchecked") HttpResponse<String> response1 = Mockito.mock(HttpResponse.class);
