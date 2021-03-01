@@ -14,5 +14,6 @@ module de.carne.test {
 	exports de.carne.test.extension.io;
 	exports de.carne.test.helper.diff;
 	exports de.carne.test.helper.io;
+	exports de.carne.test.mock;
 	exports de.carne.test.mock.net.http;
 }
