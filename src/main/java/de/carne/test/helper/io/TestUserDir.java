@@ -27,7 +27,7 @@ public final class TestUserDir {
 	private static final String PROPERTY_USER_DIR = "user.dir";
 
 	private TestUserDir() {
-		// prevent instantiation
+		// Prevent instantiation
 	}
 
 	/**

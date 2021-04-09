@@ -45,7 +45,7 @@ class HttpClientMock extends HttpClient {
 	private static final Log LOG = new Log();
 
 	HttpClientMock() {
-		// prevent instantiation outside
+		// Prevent instantiation outside
 	}
 
 	@Override
